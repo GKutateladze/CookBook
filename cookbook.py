@@ -20,7 +20,7 @@
 
 import pprint
 
-def get_products(filename):
+def create_cook_book(filename):
     with open(filename) as recipes:
         cook_book = dict()
 
@@ -49,7 +49,7 @@ def get_products(filename):
     pprint.pprint(cook_book)
     return cook_book
 
-products = get_products("recipe.txt")
+products = create_cook_book("recipe.txt")
 
 # def get_shop_list_by_dishes(dishes, person_count):
 #   shop_list = {}
