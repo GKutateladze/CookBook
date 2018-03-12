@@ -1,29 +1,55 @@
 # -*- coding: utf8 -*-
 
-cook_book = {
-  'яйчница': [
-    {'ingridient_name': 'яйца', 'quantity': 2, 'measure': 'шт.'},
-    {'ingridient_name': 'помидоры', 'quantity': 100, 'measure': 'гр.'}
-    ],
-  'стейк': [
-    {'ingridient_name': 'говядина', 'quantity': 300, 'measure': 'гр.'},
-    {'ingridient_name': 'специи', 'quantity': 5, 'measure': 'гр.'},
-    {'ingridient_name': 'масло', 'quantity': 10, 'measure': 'мл.'}
-    ],
-  'салат': [
-    {'ingridient_name': 'помидоры', 'quantity': 100, 'measure': 'гр.'},
-    {'ingridient_name': 'огурцы', 'quantity': 100, 'measure': 'гр.'},
-    {'ingridient_name': 'масло', 'quantity': 100, 'measure': 'мл.'},
-    {'ingridient_name': 'лук', 'quantity': 1, 'measure': 'шт.'}
-    ]
-  }
+# cook_book = {
+#   'яйчница': [
+#     {'ingridient_name': 'яйца', 'quantity': 2, 'measure': 'шт.'},
+#     {'ingridient_name': 'помидоры', 'quantity': 100, 'measure': 'гр.'}
+#     ],
+#   'стейк': [
+#     {'ingridient_name': 'говядина', 'quantity': 300, 'measure': 'гр.'},
+#     {'ingridient_name': 'специи', 'quantity': 5, 'measure': 'гр.'},
+#     {'ingridient_name': 'масло', 'quantity': 10, 'measure': 'мл.'}
+#     ],
+#   'салат': [
+#     {'ingridient_name': 'помидоры', 'quantity': 100, 'measure': 'гр.'},
+#     {'ingridient_name': 'огурцы', 'quantity': 100, 'measure': 'гр.'},
+#     {'ingridient_name': 'масло', 'quantity': 100, 'measure': 'мл.'},
+#     {'ingridient_name': 'лук', 'quantity': 1, 'measure': 'шт.'}
+#     ]
+#   }
 
-with open('recipe.txt') as f:
-    for line in f:
-      print(line.strip())
+import pprint
 
+def get_products(filename):
+    with open(filename) as recipes:
+        cook_book = dict()
 
+        for line in recipes:
+            dish_name = line.strip().lower()
+            cook_book[dish_name] = list()
 
+            ingridients_count = int(recipes.readline().strip())
+
+            for i in range(ingridients_count):
+                ingridient = recipes.readline().strip().split(' | ')
+
+                ingridient_name = ingridient[0].lower()
+                ingridient_quantity = int(ingridient[1])
+                ingridient_measure = ingridient[2]
+
+                ingridient = {
+                    'ингредиент': ingridient_name,
+                    'количество': ingridient_quantity,
+                    'мера': ingridient_measure
+                }
+
+                cook_book[dish_name].append(ingridient)
+
+            recipes.readline()
+    pprint.pprint(cook_book)
+    return cook_book
+
+products = get_products("recipe.txt")
 
 # def get_shop_list_by_dishes(dishes, person_count):
 #   shop_list = {}
@@ -49,5 +75,7 @@ with open('recipe.txt') as f:
 #     .lower().split(', ')
 #   shop_list = get_shop_list_by_dishes(dishes, person_count)
 #   print_shop_list(shop_list)
-#
-# create_shop_list()
+
+
+
+
